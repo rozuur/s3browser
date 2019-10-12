@@ -1,9 +1,16 @@
 /*********** Colors *********
-$color-primary = slateblue
-$color-secondary = steelblue
-$color-tertiary = lightblue
-$color-quaternary = cadetblue
+$color-initial: #fff
+$color-primary: #0366d6
+$color-secondary: #606c76
+$color-tertiary: #f4f5f6
+$color-quaternary: #d1d1d1
+$color-quinary: #e1e1e1
 ****************************/
+
+/*********** Elements *********/
+a {
+    color: #0366d6;
+}
 
 /*********** Wrapper *********/
 .wrapper {
@@ -23,8 +30,8 @@ $color-quaternary = cadetblue
 }
 /*********** Navigation *********/
 .navigation {
-    background: lightblue;
-	border-bottom: .1rem solid cadetblue;
+    background: #f4f5f6;
+	border-bottom: .1rem solid #d1d1d1;
 	display: block;
 	height: 5.2rem;
 	left: 0;
@@ -41,7 +48,7 @@ $color-quaternary = cadetblue
 }
 
 .navigation .title {
-    color: steelblue;
+    color: #606c76;
     display: inline;
     font-family: 'Gotham Rounded A', 'Gotham Rounded B', 'Helvetica Neue', Arial, sans-serif;
     font-size: 2.6rem;
@@ -74,10 +81,10 @@ $color-quaternary = cadetblue
 }
 
 .footer .icon {
-    fill: slateblue;
+    fill: #0366d6;
     height: 2rem;
 }
 
 .footer .icon:hover {
-    fill: steelblue;
+    fill: #606c76;
 }
