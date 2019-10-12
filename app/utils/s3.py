@@ -2,9 +2,11 @@ import enum
 import urllib.parse
 from collections import namedtuple
 
-import boto3 as boto3
+import boto3
+from werkzeug.exceptions import abort
 
-client = boto3.client('s3')
+S3_SCHEME_TYPES = frozenset(['s3', 's3n'])
+S3_CLIENT = boto3.client('s3')
 
 
 class S3Type(enum.Enum):
@@ -33,17 +35,24 @@ class S3Obj(namedtuple('S3Obj', ['path', 'time', 'size', 'type'])):
         return cls(path=path, time=obj['LastModified'], size=obj['Size'], type=S3Type.Key)
 
 
+def split(path):
+    url = urllib.parse.urlsplit(path)
+    if url.scheme not in S3_SCHEME_TYPES:
+        abort(400, f'Invalid scheme in {path}')
+    bucket_name = url.netloc
+    prefix = url.path
+    prefix = prefix.lstrip("/")
+    return bucket_name, prefix
+
+
 def buckets():
-    response = client.list_buckets()['Buckets']
+    response = S3_CLIENT.list_buckets()['Buckets']
     return [S3Obj.from_bucket(o) for o in response]
 
 
 def ls(path, rows=42, delimiter='/'):
-    url = urllib.parse.urlsplit(path)
-    bucket_name = url.netloc
-    prefix = url.path
-    prefix = prefix.lstrip("/")
-    response = client.list_objects_v2(
+    bucket_name, prefix = split(path)
+    response = S3_CLIENT.list_objects_v2(
         Bucket=bucket_name,
         Delimiter=delimiter,
         MaxKeys=rows,
