@@ -23,9 +23,10 @@ def browse_path(s3path):
     if s3path:
         s3files = s3.ls(s3path)
         _, bucket, prefix = s3.split(s3path)
-        hierarchy = path.hierarchy(bucket, prefix)
+        parents = path.crumbs(bucket, prefix)
+        print(bucket, prefix, parents)
     else:
         s3files = s3.buckets()
-        hierarchy = []
+        parents = []
     s3objects = S3Objects(s3files, table_id="s3Table")
-    return render_template('index.html', env=env, hierarchy=hierarchy, s3objects=s3objects)
+    return render_template('index.html', env=env, crumbs=parents, s3objects=s3objects)
