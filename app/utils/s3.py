@@ -42,7 +42,7 @@ def split(path):
     bucket_name = url.netloc
     prefix = url.path
     prefix = prefix.lstrip("/")
-    return bucket_name, prefix
+    return url.scheme, bucket_name, prefix
 
 
 def buckets():
@@ -51,7 +51,7 @@ def buckets():
 
 
 def ls(path, rows=42, delimiter='/'):
-    bucket_name, prefix = split(path)
+    _, bucket_name, prefix = split(path)
     response = S3_CLIENT.list_objects_v2(
         Bucket=bucket_name,
         Delimiter=delimiter,

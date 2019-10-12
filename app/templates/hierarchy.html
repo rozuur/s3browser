@@ -1,1 +1,9 @@
-<h3 class="title">S3://</h3> {{ hierarchy }}
+<h4>
+<span>s3://</span>
+{% for part in hierarchy %}
+    <span><a href="{{ url_for('browse_path', s3path=part.href) }}">{{ part.value }}</a></span>
+    {% if not loop.last %}
+        <span>/</span>
+    {% endif %}
+{% endfor %}
+</h4>
