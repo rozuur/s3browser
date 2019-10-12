@@ -11,6 +11,9 @@
 
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
 
+    <link href="//unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
+
+
 </head>
 <body>
 <main class="wrapper">
@@ -40,5 +43,19 @@
         </section>
     </footer>
 </main>
+
+<script src="//unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
+<script>
+    new DataTable({{ s3objects.table_id }}, {
+        searchable: true,
+        fixedHeight: false,
+        sortable: true,
+        perPage:40,
+        perPageSelect: false,
+    })
+</script>
+
 </body>
+
+
 </html>

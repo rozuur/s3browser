@@ -20,8 +20,12 @@ def browse_path(s3path):
     env = {
         'endpoint': 'local.s3browser.com'
     }
-    s3files = s3.ls(s3path) if s3path else s3.buckets()
-    _, bucket, prefix = s3.split(s3path)
-    hierarchy = path.hierarchy(bucket, prefix)
-    print(hierarchy, prefix)
-    return render_template('index.html', env=env, hierarchy=hierarchy, s3objects=S3Objects(s3files))
+    if s3path:
+        s3files = s3.ls(s3path)
+        _, bucket, prefix = s3.split(s3path)
+        hierarchy = path.hierarchy(bucket, prefix)
+    else:
+        s3files = s3.buckets()
+        hierarchy = []
+    s3objects = S3Objects(s3files, table_id="s3Table")
+    return render_template('index.html', env=env, hierarchy=hierarchy, s3objects=s3objects)
