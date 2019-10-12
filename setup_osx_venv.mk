@@ -4,6 +4,7 @@ VENV_DIR = .$(APP)_venv
 
 .PHONY = remove_venv
 
+
 $(VENV_DIR)/bin/activate: $(PYTHON3)
 	$(PYTHON3) -m venv $(VENV_DIR)
 
