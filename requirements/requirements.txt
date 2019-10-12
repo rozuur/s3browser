@@ -4,16 +4,20 @@
 #
 #    pip-compile
 #
+babel==2.7.0              # via flask-babel
 boto3==1.9.248
 botocore==1.12.248        # via boto3, s3transfer
 click==7.0                # via flask
 docutils==0.15.2          # via botocore
+flask-babel==0.12.2       # via flask-table
+flask-table==0.5.0
 flask==1.1.1
 itsdangerous==1.1.0       # via flask
-jinja2==2.10.3            # via flask
+jinja2==2.10.3            # via flask, flask-babel
 jmespath==0.9.4           # via boto3, botocore
 markupsafe==1.1.1         # via jinja2
 python-dateutil==2.8.0    # via botocore
+pytz==2019.3              # via babel
 s3transfer==0.2.1         # via boto3
 six==1.12.0               # via python-dateutil
 urllib3==1.25.6           # via botocore
