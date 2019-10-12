@@ -7,7 +7,7 @@ from werkzeug.exceptions import abort
 
 S3_SCHEME_TYPES = frozenset(['s3', 's3n'])
 S3_CLIENT = boto3.client('s3')
-
+MAX_FILE_SIZE = 1024 * 1024 * 1024
 
 class S3Type(enum.Enum):
     Bucket = enum.auto()
@@ -61,6 +61,16 @@ def ls(path, rows=42, delimiter='/'):
     prefixes = [S3Obj.from_prefix(o, bucket_name) for o in response.get('CommonPrefixes', [])]
     keys = [S3Obj.from_content(o, bucket_name) for o in response.get('Contents', [])]
     return prefixes + keys
+
+
+def content(path):
+    _, bucket_name, prefix = split(path)
+    object = S3_CLIENT.get_object(Bucket=bucket_name, Key=prefix)
+    if object['ContentLength'] > MAX_FILE_SIZE:
+        abort(400, "Max file size exceeded")
+    if object['ResponseMetadata']['HTTPStatusCode'] != 200:
+        abort(object['ResponseMetadata']['HTTPStatusCode'])
+    return object['Body'].read()
 
 
 if __name__ == '__main__':

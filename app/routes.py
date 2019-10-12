@@ -1,4 +1,7 @@
-from flask import render_template
+import io
+import mimetypes
+
+from flask import render_template, send_file
 from flask_table import Table, Col, LinkCol
 
 from app import app
@@ -10,7 +13,6 @@ class S3Objects(Table):
     path = LinkCol('Path', endpoint='browse_path', url_kwargs=dict(s3path='path'), attr='path')
     time = Col('Time')
     size = Col('Size')
-    type = Col('Type')
 
 
 @app.route('/', defaults={'s3path': ''})
@@ -28,5 +30,11 @@ def browse_path(s3path):
     else:
         s3files = s3.buckets()
         parents = []
-    s3objects = S3Objects(s3files, table_id="s3Table")
-    return render_template('index.html', env=env, crumbs=parents, s3objects=s3objects)
+    if len(s3files) == 1 and s3files[0].path == s3path:
+        filename = s3files[0].path
+        content = s3.content(filename)
+        mimetype = mimetypes.MimeTypes().guess_type(filename)[0]
+        return send_file(io.BytesIO(content), mimetype=mimetype, attachment_filename='python.jpg')
+    else:
+        s3objects = S3Objects(s3files, table_id="s3Table")
+        return render_template('s3list.html', env=env, crumbs=parents, s3objects=s3objects)
