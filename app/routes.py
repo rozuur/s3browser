@@ -32,13 +32,15 @@ def browse_path(s3path):
         s3files = s3.ls(s3path)
         _, bucket, prefix = s3.split(s3path)
         parents = path.crumbs(bucket, prefix)
+        app.logger.debug("parents of %s is %s", s3path, parents)
     else:
         s3files = s3.buckets()
         parents = []
     if len(s3files) == 1 and s3files[0].path == s3path:
         filename = s3files[0].path
-        content = s3.content(filename)
         mimetype = mimetypes.MimeTypes().guess_type(filename)[0]
+        app.logger.info("%s mimetype is %s", filename, mimetype)
+        content = s3.content(filename)
         return send_file(io.BytesIO(content), mimetype=mimetype)
     else:
         s3objects = S3Objects(s3files, table_id="s3Table")
