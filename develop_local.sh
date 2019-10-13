@@ -29,7 +29,7 @@ function build {
 function run {
     local port="$1"
     trap static_analyse EXIT
-    env FLASK_APP=s3browser.py flask run --host=0.0.0.0 --port="${port}"
+    DEBUG=true FLASK_APP=s3browser.py flask run --host=0.0.0.0 --port="${port}"
 }
 
 function main {

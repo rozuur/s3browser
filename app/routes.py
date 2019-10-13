@@ -7,6 +7,8 @@ from flask_table import Table, Col, LinkCol
 from app import app
 from app.utils import s3, path
 
+app.config.from_object('config')
+
 
 class S3Objects(Table):
     # To understand LinkCol https://github.com/plumdog/flask_table/blob/master/examples/simple_app.py
@@ -15,18 +17,19 @@ class S3Objects(Table):
     size = Col('Size')
 
 
+@app.route('/ping')
+def ping():
+    return 'pong'
+
+
 @app.route('/', defaults={'s3path': ''})
 @app.route('/path/', defaults={'s3path': ''})
 @app.route('/path/<path:s3path>')
 def browse_path(s3path):
-    env = {
-        'endpoint': 'local.s3browser.com'
-    }
     if s3path:
         s3files = s3.ls(s3path)
         _, bucket, prefix = s3.split(s3path)
         parents = path.crumbs(bucket, prefix)
-        print(bucket, prefix, parents)
     else:
         s3files = s3.buckets()
         parents = []
@@ -34,7 +37,7 @@ def browse_path(s3path):
         filename = s3files[0].path
         content = s3.content(filename)
         mimetype = mimetypes.MimeTypes().guess_type(filename)[0]
-        return send_file(io.BytesIO(content), mimetype=mimetype, attachment_filename='python.jpg')
+        return send_file(io.BytesIO(content), mimetype=mimetype)
     else:
         s3objects = S3Objects(s3files, table_id="s3Table")
-        return render_template('s3list.html', env=env, crumbs=parents, s3objects=s3objects)
+        return render_template('s3list.html', crumbs=parents, s3objects=s3objects)
