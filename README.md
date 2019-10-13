@@ -7,11 +7,11 @@ Simple S3 file browser
 
 To build `docker build --tag s3browser .`
 
-Create a file `aws.env` with environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+Create a file `~/aws.env` with environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 
 `*.env` are ignored in  `.gitignore` and `.dockerignore`
 
-And run docker with above env file `docker run -t -i --env-file aws.env -p9000:9000 s3browser ./s3browser/start_gunicorn.sh`
+And run docker with above env file `docker run -t -i --env-file ~/aws.env -p9000:9000 s3browser ./s3browser/start_gunicorn.sh`
 
 **Health Check** url is `/ping`
 
