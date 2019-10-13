@@ -3,6 +3,9 @@ S3 Browser
 
 Simple S3 file browser
 
+CSV File
+![Alt text](pictures/csv_file.png?raw=true "CSV Sample")
+
 ### Docker
 
 To build `docker build --tag s3browser .`
