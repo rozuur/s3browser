@@ -13,6 +13,7 @@ Create a file `aws.env` with environment variables `AWS_ACCESS_KEY_ID` and `AWS_
 
 And run docker with above env file `docker run -t -i --env-file aws.env -p9000:9000 s3browser ./s3browser/start_gunicorn.sh`
 
+**Health Check** url is `/ping`
 
 #### Acknowledgements
 
