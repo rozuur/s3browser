@@ -7,7 +7,7 @@ declare -r SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 declare -r APP=s3browse
 
 function static_analyse {
-    return 0
+    black "${SCRIPT_DIR}/app" "${SCRIPT_DIR}"/*.py
 }
 
 function venv_activate {
