@@ -5,6 +5,7 @@ IFS=$'\n\t'
 
 declare -r SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 declare -r APP=s3browse
+declare -r PORT=9000
 
 function static_analyse {
     black "${SCRIPT_DIR}/app" "${SCRIPT_DIR}"/*.py
@@ -33,11 +34,10 @@ function run {
 }
 
 function main {
-    local port=${1?Port is required}
     unset PYTHONPATH
     export PYTHONPATH="."
     build
-    run "${port}"
+    run "${PORT}"
 }
 
 main "$@"
