@@ -17,8 +17,6 @@ And run docker with above env file `docker run -t -i --env-file ~/aws.env -p9000
 
 #### Acknowledgements
 
-Tables are displayed using [Vanilla DataTables](https://github.com/Mobius1/Vanilla-DataTables)
-
 CSS is modified from [milligram](https://github.com/milligram/milligram.github.io)
 
 
