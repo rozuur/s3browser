@@ -15,7 +15,7 @@ class S3Objects(Table):
     path = LinkCol(
         "Path", endpoint="browse_path", url_kwargs=dict(s3path="path"), attr="path"
     )
-    time = DatetimeCol("Time")
+    time = DatetimeCol("Time", datetime_format="yyyy.MM.dd HH:mm:ss")
     size = Col("Size")
 
 
