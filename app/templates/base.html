@@ -57,7 +57,8 @@
         var table = $("#{{ s3objects.table_id }}").DataTable( {
             "paging": true,
             "pageLength": 50,
-            "lengthChange": false
+            "lengthChange": false,
+            "scrollX": true
         } );
     } );
 {% endif %}
