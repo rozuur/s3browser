@@ -53,7 +53,7 @@ def buckets():
     return [S3Obj.from_bucket(o) for o in response]
 
 
-def ls(path, rows=42, delimiter="/"):
+def ls(path, rows=1000, delimiter="/"):
     _, bucket_name, prefix = split(path)
     response = S3_CLIENT.list_objects_v2(
         Bucket=bucket_name, Delimiter=delimiter, MaxKeys=rows, Prefix=prefix
