@@ -7,6 +7,7 @@ VENV_DIR = .$(APP)_venv
 
 $(VENV_DIR)/bin/activate: $(PYTHON3)
 	$(PYTHON3) -m venv $(VENV_DIR)
+	brew install libmagic
 
 
 $(PYTHON3):
