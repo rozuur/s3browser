@@ -58,7 +58,7 @@ def csv_table(content, delimiter):
 
 
 def render_file(filename, parents):
-    mimetype = magic.from_buffer(open(filename, 'rb').read(1024), mime=True)
+    mimetype = magic.from_buffer(open(filename, "rb").read(1024), mime=True)
     app.logger.info("%s mimetype is %s", filename, mimetype)
     content = s3.content(filename)
     if mimetype in ("text/csv", "text/tab-separated-values"):
