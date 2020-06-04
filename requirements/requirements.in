@@ -1,3 +1,5 @@
 Flask
 boto3
 flask-table
+smart-open
+python-magic

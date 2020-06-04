@@ -1,6 +1,8 @@
 import csv
 import io
 import mimetypes
+import magic
+from smart_open import open
 import string
 from collections import namedtuple
 
@@ -56,7 +58,7 @@ def csv_table(content, delimiter):
 
 
 def render_file(filename, parents):
-    mimetype = mimetypes.MimeTypes().guess_type(filename)[0]
+    mimetype = magic.from_buffer(open(filename, "rb").read(1024), mime=True)
     app.logger.info("%s mimetype is %s", filename, mimetype)
     content = s3.content(filename)
     if mimetype in ("text/csv", "text/tab-separated-values"):
