@@ -1,6 +1,6 @@
-FROM python:3.7.4-slim-stretch AS compile-image
+FROM python:3.7.4-slim-stretch
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc git
+RUN apt-get update && apt-get install -y --no-install-recommends libmagic1
 
 RUN pip install virtualenv
 ENV VIRTUAL_ENV=/opt/venv
@@ -12,12 +12,6 @@ COPY requirements/requirements.txt .
 COPY requirements/deploy-requirements.txt .
 RUN pip install -U pip && pip install -r requirements.txt -r deploy-requirements.txt
 
-# ----------------------------------------------------------------- #
-FROM python:3.7.4-slim-stretch
-COPY --from=compile-image /opt/venv /opt/venv
-
-ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN adduser --disabled-password --gecos "" pyuser
 
 COPY . /s3browser
